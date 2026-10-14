@@ -1,0 +1,13 @@
+{
+  "name": "Rock Rádio",
+  "short_name": "Rock Rádio",
+  "description": "Verbus Rock e Crab Rock Radio em um só lugar.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#101116",
+  "theme_color": "#17191f",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
