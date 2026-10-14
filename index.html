@@ -14,7 +14,20 @@
 </section>
 <section class="now card"><div class="section-label"><span class="live-dot"></span> TOCANDO AGORA</div>
 <div class="track"><img id="albumArt" class="album-art hidden" alt="Capa do álbum" referrerpolicy="no-referrer"><div id="recordFallback" class="record">♫</div><div class="track-copy"><h2 id="trackTitle">Consultando a rádio…</h2><p id="trackArtist">Aguarde enquanto buscamos os metadados.</p><p id="trackStatus" class="status">Preparando conexão</p></div></div>
-<div class="live-controls"><audio id="audio" preload="none" controls></audio><button id="favoriteCurrent" class="favorite-button" type="button" aria-pressed="false" title="Salvar música nos favoritos">♡ Favoritar</button></div><p class="hint">Transmissão ao vivo. A música segue a programação da estação; não é possível escolher o ponto de reprodução.</p><section class="sleep-timer" aria-label="Temporizador de desligamento"><div><strong>Temporizador</strong><small id="timerStatus">Desligar a rádio depois de um tempo</small></div><div class="timer-actions"><select id="timerDuration" aria-label="Tempo para desligar"><option value="15">15 min</option><option value="30" selected>30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option></select><button id="timerToggle" class="text-button" type="button">Iniciar</button></div></section></section>
+<div class="live-controls">
+  <div class="custom-player" aria-label="Controles da transmissão ao vivo">
+    <button id="playToggle" class="play-toggle" type="button" aria-label="Iniciar rádio" aria-pressed="false">
+      <span id="playToggleIcon" aria-hidden="true">▶</span>
+    </button>
+    <div class="volume-control">
+      <label for="volumeControl" aria-label="Volume">🔊</label>
+      <input id="volumeControl" type="range" min="0" max="100" value="70" step="1" aria-label="Volume da rádio">
+      <output id="volumeValue" for="volumeControl">70%</output>
+    </div>
+  </div>
+  <audio id="audio" preload="none" playsinline></audio>
+  <button id="favoriteCurrent" class="favorite-button" type="button" aria-pressed="false" title="Salvar música nos favoritos">♡ Favoritar</button>
+</div><p class="hint">Transmissão ao vivo. A música segue a programação da estação; não é possível escolher o ponto de reprodução.</p><section class="sleep-timer" aria-label="Temporizador de desligamento"><div><strong>Temporizador</strong><small id="timerStatus">Desligar a rádio depois de um tempo</small></div><div class="timer-actions"><select id="timerDuration" aria-label="Tempo para desligar"><option value="15">15 min</option><option value="30" selected>30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option></select><button id="timerToggle" class="text-button" type="button">Iniciar</button></div></section></section>
 <section class="card history-card"><div class="history-heading"><div><p class="section-label">MEMÓRIA MUSICAL</p><h2>Últimas músicas</h2></div><div class="history-actions"><button id="showFavorites" class="text-button" type="button" aria-pressed="false">♡ Favoritos</button><button id="clearHistory" class="text-button" type="button">Limpar</button></div></div>
 <p id="historyFor" class="muted">Histórico da Verbus Rock</p><ol id="historyList" class="history-list"><li class="empty">As músicas detectadas aparecerão aqui.</li></ol>
 <button id="loadMoreHistory" class="text-button load-more hidden" type="button">Carregar mais músicas</button><p class="hint">Histórico e favoritos ficam salvos neste navegador/dispositivo. As capas aparecem quando há correspondência disponível.</p></section>

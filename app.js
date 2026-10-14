@@ -57,7 +57,7 @@ async function updateArtwork(track){
 function setStation(id){
  selected=id;lastTrackKey="";historyVisibleCount=HISTORY_PAGE_SIZE;
  document.querySelectorAll(".station").forEach(btn=>btn.classList.toggle("active",btn.dataset.station===id));
- $("audio").src=STATIONS[id].stream;$("trackTitle").textContent="Consultando a rádio…";$("trackArtist").textContent="Aguarde enquanto buscamos os metadados.";$("trackStatus").textContent="Atualizando dados";
+ $("audio").pause();$("audio").removeAttribute("src");$("audio").load();if(typeof updatePlayerButton==="function")updatePlayerButton();$("trackTitle").textContent="Consultando a rádio…";$("trackArtist").textContent="Aguarde enquanto buscamos os metadados.";$("trackStatus").textContent="Atualizando dados";
  $("albumArt").classList.add("hidden");$("recordFallback").classList.remove("hidden");renderHistory();refreshMetadata();
 }
 async function refreshMetadata(){
@@ -93,8 +93,63 @@ setStation=function(id){baseSetStation(id);showingFavorites=false;$('showFavorit
 const baseRefreshMetadata=refreshMetadata;
 refreshMetadata=async function(){await baseRefreshMetadata();updateFavoriteButton();};
 function stopTimer(message='Temporizador cancelado'){if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerEndsAt=0;$('timerStatus').textContent=message;$('timerToggle').textContent='Iniciar';$('timerToggle').classList.remove('is-selected');}
-$('timerToggle').addEventListener('click',()=>{if(timerInterval){stopTimer();return;}const mins=Number($('timerDuration').value)||30;timerEndsAt=Date.now()+mins*60000;$('timerStatus').textContent=`Desligamento em ${mins} minutos`;$('timerToggle').textContent='Cancelar';$('timerToggle').classList.add('is-selected');timerInterval=setInterval(()=>{const remaining=timerEndsAt-Date.now();if(remaining<=0){$('audio').pause();$('audio').src='';stopTimer('Rádio desligada pelo temporizador');return;}const m=Math.ceil(remaining/60000);$('timerStatus').textContent=`A rádio será desligada em ${m} min`;},1000);});
+$('timerToggle').addEventListener('click',()=>{if(timerInterval){stopTimer();return;}const mins=Number($('timerDuration').value)||30;timerEndsAt=Date.now()+mins*60000;$('timerStatus').textContent=`Desligamento em ${mins} minutos`;$('timerToggle').textContent='Cancelar';$('timerToggle').classList.add('is-selected');timerInterval=setInterval(()=>{const remaining=timerEndsAt-Date.now();if(remaining<=0){$('audio').pause();$('audio').removeAttribute('src');$('audio').load();updatePlayerButton();stopTimer('Rádio desligada pelo temporizador');return;}const m=Math.ceil(remaining/60000);$('timerStatus').textContent=`A rádio será desligada em ${m} min`;},1000);});
 $('installBtn').addEventListener('click',async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').textContent='Instalar';return;}const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(standalone){$('installBtn').textContent='App instalado';return;}const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);alert(isIOS?'Para instalar: toque em Compartilhar no Safari e escolha “Adicionar à Tela de Início”.':'Para instalar: abra o menu do navegador (⋮) e escolha “Instalar app” ou “Adicionar à tela inicial”, se disponível.');});
+
+// Player personalizado: iniciar/parar e controle de volume, sem linha do tempo.
+const audioPlayer = $("audio");
+const playToggle = $("playToggle");
+const playToggleIcon = $("playToggleIcon");
+const volumeControl = $("volumeControl");
+const volumeValue = $("volumeValue");
+
+audioPlayer.volume = Number(volumeControl.value) / 100;
+
+function updatePlayerButton() {
+  const playing = !audioPlayer.paused && !audioPlayer.ended;
+  playToggle.classList.toggle("is-playing", playing);
+  playToggle.setAttribute("aria-pressed", String(playing));
+  playToggle.setAttribute("aria-label", playing ? "Parar rádio" : "Iniciar rádio");
+  playToggleIcon.textContent = playing ? "■" : "▶";
+}
+
+async function toggleRadioPlayback() {
+  if (!audioPlayer.paused) {
+    audioPlayer.pause();
+    audioPlayer.removeAttribute("src");
+    audioPlayer.load();
+    $("trackStatus").textContent = "Transmissão parada";
+    updatePlayerButton();
+    return;
+  }
+
+  // Reatribui a estação atual para retomar a transmissão ao vivo.
+  audioPlayer.src = STATIONS[selected].stream;
+  $("trackStatus").textContent = "Conectando à transmissão ao vivo…";
+  try {
+    await audioPlayer.play();
+    $("trackStatus").textContent = "Transmitindo ao vivo";
+  } catch (error) {
+    $("trackStatus").textContent = "Toque em iniciar para tentar novamente";
+    console.warn("Playback:", error);
+  }
+  updatePlayerButton();
+}
+
+playToggle.addEventListener("click", toggleRadioPlayback);
+audioPlayer.addEventListener("play", updatePlayerButton);
+audioPlayer.addEventListener("pause", updatePlayerButton);
+audioPlayer.addEventListener("ended", updatePlayerButton);
+
+volumeControl.addEventListener("input", () => {
+  const value = Number(volumeControl.value);
+  audioPlayer.volume = value / 100;
+  audioPlayer.muted = value === 0;
+  volumeValue.textContent = `${value}%`;
+  volumeControl.setAttribute("aria-valuetext", `${value}%`);
+});
+
+
 document.querySelectorAll(".station").forEach(btn=>btn.addEventListener("click",()=>setStation(btn.dataset.station)));
 $("clearHistory").addEventListener("click",()=>{if(confirm(`Limpar o histórico da ${STATIONS[selected].name} neste dispositivo?`)){saveHistory([]);lastTrackKey="";historyVisibleCount=HISTORY_PAGE_SIZE;renderHistory();}});
 $("loadMoreHistory").addEventListener("click",()=>{historyVisibleCount+=HISTORY_PAGE_SIZE;renderHistory();});
