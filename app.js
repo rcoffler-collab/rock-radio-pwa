@@ -94,24 +94,29 @@ function addTrack(track) {
   const artist = String(track.artist || "Artista não informado").trim();
   const key = `${selected}|${normalizeTrackPart(artist)}|${normalizeTrackPart(title)}`;
 
-  // Não registra novamente a mesma faixa durante consultas consecutivas.
+  // Evita registrar repetidamente a faixa em consultas consecutivas.
   if (key === lastTrackKey) return;
 
   const history = getHistory();
-  const latest = history[0];
+  const normalizedTitle = normalizeTrackPart(title);
+  const normalizedArtist = normalizeTrackPart(artist);
+  const now = Date.now();
 
-  // Também evita duplicar a faixa mais recente após recarregar a página
-  // ou voltar para a mesma estação enquanto a música continua tocando.
-  if (
-    latest &&
-    normalizeTrackPart(latest.title) === normalizeTrackPart(title) &&
-    normalizeTrackPart(latest.artist) === normalizeTrackPart(artist)
-  ) {
-    lastTrackKey = key;
-    return;
-  }
+  // Não repete a mesma faixa na mesma estação se ela já foi registrada
+  // nas últimas 6 horas. Isso cobre troca de estação, recarga da página
+  // e respostas repetidas da API enquanto a música continua tocando.
+  const duplicateRecently = history.some(item => {
+    const sameTitle = normalizeTrackPart(item.title) === normalizedTitle;
+    const sameArtist = normalizeTrackPart(item.artist) === normalizedArtist;
+    const timestamp = new Date(item.at).getTime();
+    const recent = Number.isFinite(timestamp) && now >= timestamp && (now - timestamp) < 6 * 60 * 60 * 1000;
+    return sameTitle && sameArtist && recent;
+  });
 
   lastTrackKey = key;
+
+  if (duplicateRecently) return;
+
   history.unshift({
     title,
     artist,
@@ -121,7 +126,6 @@ function addTrack(track) {
   saveHistory(history);
   renderHistory();
 }
-
 function renderHistory() {
   $("historyFor").textContent = `Histórico da ${STATIONS[selected].name}`;
   const list = $("historyList");
