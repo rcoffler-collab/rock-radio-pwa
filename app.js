@@ -68,6 +68,33 @@ async function refreshMetadata(){
  const key=`${normalizeTrackPart(track.artist)}|${normalizeTrackPart(track.title)}`;if(key!==lastArtworkKey)updateArtwork(track);addTrack(track);
  }catch(error){if(id!==selected)return;$("trackStatus").textContent="Não foi possível consultar os metadados";$("trackArtist").textContent="A transmissão pode continuar funcionando. Vamos tentar novamente.";console.warn("Metadata lookup:",error);}
 }
+let showingFavorites=false, timerInterval=null, timerEndsAt=0;
+function favoritesKey(id=selected){return `rock-radio-favorites-${id}`;}
+function getFavorites(id=selected){try{return JSON.parse(localStorage.getItem(favoritesKey(id))||"[]");}catch{return [];}}
+function saveFavorites(items,id=selected){localStorage.setItem(favoritesKey(id),JSON.stringify(items));}
+function trackId(item){return `${normalizeTrackPart(item.artist)}|${normalizeTrackPart(item.title)}`;}
+function isFavorite(item){return getFavorites().some(f=>trackId(f)===trackId(item));}
+function currentTrack(){return {title:$('trackTitle').textContent,artist:$('trackArtist').textContent,at:new Date().toISOString()};}
+function toggleFavorite(item){if(!item||!item.title||item.title.includes('Consultando'))return;const favs=getFavorites(),id=trackId(item);const next=favs.some(f=>trackId(f)===id)?favs.filter(f=>trackId(f)!==id):[{title:item.title,artist:item.artist,at:new Date().toISOString()},...favs];saveFavorites(next);renderHistory();updateFavoriteButton();}
+function updateFavoriteButton(){const item=currentTrack(),on=isFavorite(item),button=$('favoriteCurrent');button.classList.toggle('is-favorite',on);button.setAttribute('aria-pressed',String(on));button.textContent=on?'♥ Favoritada':'♡ Favoritar';}
+const originalRenderHistory=renderHistory;
+renderHistory=function(){
+ if(!showingFavorites){originalRenderHistory();decorateHistory();return;}
+ $('historyFor').textContent=`Favoritos salvos neste dispositivo`;
+ const list=$('historyList'),items=getFavorites();list.replaceChildren();
+ if(!items.length){const li=document.createElement('li');li.className='empty';li.textContent='Toque em “Favoritar” durante uma música para guardá-la aqui.';list.append(li);$('loadMoreHistory').classList.add('hidden');return;}
+ items.forEach(item=>{const li=document.createElement('li');li.className='favorite-row';const info=document.createElement('div'),title=document.createElement('strong'),artist=document.createElement('small'),button=document.createElement('button');title.textContent=item.title;artist.textContent=item.artist||'';info.append(title,artist);button.className='remove-favorite';button.type='button';button.textContent='♥';button.setAttribute('aria-label',`Remover ${item.title} dos favoritos`);button.addEventListener('click',()=>{saveFavorites(getFavorites().filter(f=>trackId(f)!==trackId(item)));renderHistory();updateFavoriteButton();});li.append(info,button);list.append(li);});$('loadMoreHistory').classList.add('hidden');
+};
+function decorateHistory(){const list=$('historyList');list.querySelectorAll('li:not(.empty)').forEach(li=>{if(li.querySelector('.history-fav'))return;const title=li.querySelector('strong')?.textContent||'',artist=li.querySelector('small')?.textContent||'';const btn=document.createElement('button');btn.className='history-fav'+(isFavorite({title,artist})?' is-favorite':'');btn.type='button';btn.textContent=isFavorite({title,artist})?'♥':'♡';btn.title='Adicionar/remover dos favoritos';btn.setAttribute('aria-label',`Favoritar ${title}`);btn.addEventListener('click',()=>toggleFavorite({title,artist}));li.append(btn);});}
+$('favoriteCurrent').addEventListener('click',()=>toggleFavorite(currentTrack()));
+$('showFavorites').addEventListener('click',()=>{showingFavorites=!showingFavorites;$('showFavorites').classList.toggle('is-selected',showingFavorites);$('showFavorites').setAttribute('aria-pressed',String(showingFavorites));$('showFavorites').textContent=showingFavorites?'♫ Ver histórico':'♡ Favoritos';historyVisibleCount=HISTORY_PAGE_SIZE;renderHistory();});
+const baseSetStation=setStation;
+setStation=function(id){baseSetStation(id);showingFavorites=false;$('showFavorites').classList.remove('is-selected');$('showFavorites').setAttribute('aria-pressed','false');$('showFavorites').textContent='♡ Favoritos';updateFavoriteButton();};
+const baseRefreshMetadata=refreshMetadata;
+refreshMetadata=async function(){await baseRefreshMetadata();updateFavoriteButton();};
+function stopTimer(message='Temporizador cancelado'){if(timerInterval)clearInterval(timerInterval);timerInterval=null;timerEndsAt=0;$('timerStatus').textContent=message;$('timerToggle').textContent='Iniciar';$('timerToggle').classList.remove('is-selected');}
+$('timerToggle').addEventListener('click',()=>{if(timerInterval){stopTimer();return;}const mins=Number($('timerDuration').value)||30;timerEndsAt=Date.now()+mins*60000;$('timerStatus').textContent=`Desligamento em ${mins} minutos`;$('timerToggle').textContent='Cancelar';$('timerToggle').classList.add('is-selected');timerInterval=setInterval(()=>{const remaining=timerEndsAt-Date.now();if(remaining<=0){$('audio').pause();$('audio').src='';stopTimer('Rádio desligada pelo temporizador');return;}const m=Math.ceil(remaining/60000);$('timerStatus').textContent=`A rádio será desligada em ${m} min`;},1000);});
+$('installBtn').addEventListener('click',async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').textContent='Instalar';return;}const standalone=window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone;if(standalone){$('installBtn').textContent='App instalado';return;}const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);alert(isIOS?'Para instalar: toque em Compartilhar no Safari e escolha “Adicionar à Tela de Início”.':'Para instalar: abra o menu do navegador (⋮) e escolha “Instalar app” ou “Adicionar à tela inicial”, se disponível.');});
 document.querySelectorAll(".station").forEach(btn=>btn.addEventListener("click",()=>setStation(btn.dataset.station)));
 $("clearHistory").addEventListener("click",()=>{if(confirm(`Limpar o histórico da ${STATIONS[selected].name} neste dispositivo?`)){saveHistory([]);lastTrackKey="";historyVisibleCount=HISTORY_PAGE_SIZE;renderHistory();}});
 $("loadMoreHistory").addEventListener("click",()=>{historyVisibleCount+=HISTORY_PAGE_SIZE;renderHistory();});
@@ -77,6 +104,6 @@ $("shareBtn").addEventListener("click",async()=>{
  catch(error){if(error?.name!=="AbortError")console.warn("Share:",error);}
 });
 window.addEventListener("beforeinstallprompt",event=>{event.preventDefault();installPrompt=event;$("installBtn").classList.remove("hidden");});
-$("installBtn").addEventListener("click",async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$("installBtn").classList.add("hidden");});
+
 if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(console.warn));
 setStation("verbus");setInterval(refreshMetadata,15000);
