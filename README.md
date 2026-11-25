@@ -1,31 +1,33 @@
-# Rock Rádio — PWA inicial
+# Rock Rádio
 
-Aplicativo instalável para Verbus Rock e Crab Rock Radio, preparado para Netlify.
+Player pessoal para as coleções Verbus Rock e Crab Rock Radio.
 
-## Estações configuradas
-- Verbus Rock — mount point `kqf4jf5zvzivv`
-- Crab Rock Radio — mount point `i8nvkvetmkbuv`
+## Publicação
 
-## O que já existe
-- Interface responsiva com seletor de estação.
-- Player de áudio usando os streams da Zeno.
-- Manifesto e service worker para instalação PWA.
-- Histórico local separado por estação (até 100 itens por estação).
-- Função Netlify para tentar consultar a API de metadados da Zeno.
+O projeto é estático, sem compilação. A Netlify publica a raiz deste repositório automaticamente após alterações na branch main. O arquivo netlify.toml mantém essa configuração.
 
-## Importante sobre os metadados
-A Zeno documenta a API de metadados como `https://api.zeno.fm/mounts/metadata/subscribe/{mount}`. O endpoint pode responder em streaming/SSE e o formato real de payload precisa ser validado com as duas estações. A função incluída faz uma leitura curta de teste, mas ainda precisa ser testada em deploy real; a interface mostra um aviso se a resposta não for compatível. O histórico só registra faixas que a consulta consegue detectar enquanto o aplicativo está aberto; não recupera histórico anterior nem registra continuamente quando todos os dispositivos estão fechados.
+## Músicas
 
-## Publicar no Netlify
-1. Descompacte a pasta.
-2. Envie os arquivos para um repositório GitHub novo (por exemplo, `rock-radio-pwa`).
-3. No Netlify, escolha **Add new site > Import an existing project** e conecte esse repositório.
-4. O `netlify.toml` já define a pasta publicada e a função. Não é necessário comando de build.
-5. Após publicar, teste primeiro a consulta em `https://SEU-SITE.netlify.app/.netlify/functions/metadata?station=verbus` e depois com `station=crab`.
-6. Se a função retornar erro ou não reconhecer os dados, ajuste o parser conforme a resposta real da Zeno antes de considerar a função concluída.
+Os MP3 ficam nas pastas verbus e crab do espaço radio-rock, no Cloudflare R2. O endereço público está em radio-config.json. As listas conferidas contêm 139 faixas da Verbus e 69 da Crab. As 208 capas foram extraídas dos próprios MP3 e otimizadas para o player.
 
-## Limitações desta primeira versão
-- O histórico fica no armazenamento local do navegador/dispositivo; não sincroniza entre celulares.
-- A PWA precisa ser aberta para detectar novas faixas.
-- A instalação PWA depende de HTTPS, que o Netlify fornece no site publicado.
-- Alguns navegadores podem limitar reprodução automática; o usuário deve tocar em Play.
+## Recursos
+
+Reprodução contínua; anterior e próxima; busca; favoritas salvas neste navegador; ordem aleatória; repetir coleção ou faixa; temporizador; compartilhar; instalação como PWA; integração com os controles de mídia do sistema quando disponível. O suporte à continuidade com a tela bloqueada depende do navegador e do sistema do aparelho.
+
+## Atualizar coleções
+
+Abra organizar.html para selecionar MP3 ou importar uma lista JSONL. A tela prepara verbus.json ou crab.json. Envie esse arquivo para a pasta da coleção no Cloudflare. Para ativar a leitura dessas listas remotas, use a configuração gerada na mesma tela e substitua radio-config.json no site; a opção remoteCatalogs deve estar true. As listas incluídas no site continuam disponíveis se não houver catálogo remoto.
+
+Os MP3 selecionados na tela de organização são lidos localmente, sem envio automático. Nenhuma chave privada do Cloudflare está presente neste site.
+
+## Arquivos do aparelho
+
+No computador, a opção Arquivos do aparelho permite ouvir MP3 locais. Essa seleção vale apenas neste aparelho e não substitui as músicas publicadas.
+
+## Dependências
+
+jsmediatags 3.9.7, distribuído localmente; licença em vendor/jsmediatags-LICENSE.md. Fonte Manrope, licença em assets/manrope-OFL.txt.
+
+## Verificação
+
+Validados: sintaxe JavaScript, busca com acentos, filtros de favoritas, nomes com caracteres especiais, transição e reinício da fila, integridade das 208 faixas, reprodução real pelo Cloudflare e avanço automático ao terminar.

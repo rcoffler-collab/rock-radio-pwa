@@ -1,12 +1,5 @@
-const CACHE="rock-radio-shell-v1";
-const SHELL=["/","/index.html","/styles.css","/app.js","/manifest.webmanifest","/icons/icon.svg"];
-self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL))));
-self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k))))));
-self.addEventListener("fetch",event=>{
-  const url=new URL(event.request.url);
-  if(url.origin!==location.origin || url.pathname.startsWith("/.netlify/")) return;
-  event.respondWith(caches.match(event.request).then(cached=>cached||fetch(event.request).then(response=>{
-    if(event.request.method==="GET" && response.ok){const copy=response.clone();caches.open(CACHE).then(cache=>cache.put(event.request,copy));}
-    return response;
-  })));
-});
+const CACHE='rock-radio-v2-20261125-4';
+const SHELL=['./','index.html','styles.css','app.js','core.js','media.js','catalogos/catalogs.js','vendor/jsmediatags.min.js','assets/manrope.ttf','assets/icon.svg','assets/icon-192.png','assets/icon-512.png','manifest.webmanifest','organizar.html','organizar.js'];
+self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('rock-radio')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',event=>{const request=event.request,url=new URL(request.url);if(request.method!=='GET'||url.origin!==self.location.origin||request.headers.has('range')||request.destination==='audio'||url.pathname.endsWith('radio-config.json'))return;if(request.mode==='navigate'){event.respondWith(fetch(request).catch(()=>caches.match(request).then(hit=>hit||caches.match('index.html'))));return;}event.respondWith(caches.match(request).then(hit=>hit||fetch(request)));});

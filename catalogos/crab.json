@@ -1,0 +1,627 @@
+{
+  "version": 1,
+  "station": "crab",
+  "tracks": [
+    {
+      "id": "t19ers4n",
+      "file": "Across the Universe - Scanner.mp3",
+      "title": "Across the Universe",
+      "artist": "Scanner",
+      "album": "",
+      "cover": "assets/covers/crab-t19ers4n.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1yphmek",
+      "file": "Angel Witch - Angel Witch.mp3",
+      "title": "Angel Witch",
+      "artist": "Angel Witch",
+      "album": "",
+      "cover": "assets/covers/crab-t1yphmek.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t9brxoz",
+      "file": "Ashes to Ashes - Shakra.mp3",
+      "title": "Ashes to Ashes",
+      "artist": "Shakra",
+      "album": "",
+      "cover": "assets/covers/crab-t9brxoz.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t78owyi",
+      "file": "Beneath These Waves - Remaster 2019 - Demons & Wizards.mp3",
+      "title": "Beneath These Waves - Remaster 2019",
+      "artist": "Demons & Wizards",
+      "album": "",
+      "cover": "assets/covers/crab-t78owyi.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1ef2amc",
+      "file": "Black Rain - Angel Dust.mp3",
+      "title": "Black Rain",
+      "artist": "Angel Dust",
+      "album": "",
+      "cover": "assets/covers/crab-t1ef2amc.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tugfk5j",
+      "file": "Blacklist - Exodus.mp3",
+      "title": "Blacklist",
+      "artist": "Exodus",
+      "album": "",
+      "cover": "assets/covers/crab-tugfk5j.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t169g317",
+      "file": "Bleed - Angel Dust.mp3",
+      "title": "Bleed",
+      "artist": "Angel Dust",
+      "album": "",
+      "cover": "assets/covers/crab-t169g317.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1r49jds",
+      "file": "Blood of Heroes - Týr.mp3",
+      "title": "Blood of Heroes",
+      "artist": "Týr",
+      "album": "",
+      "cover": "assets/covers/crab-t1r49jds.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t12wsfjp",
+      "file": "Blood on My Hands - Remaster 2019 - Demons & Wizards.mp3",
+      "title": "Blood on My Hands - Remaster 2019",
+      "artist": "Demons & Wizards",
+      "album": "",
+      "cover": "assets/covers/crab-t12wsfjp.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1p0ilkb",
+      "file": "Bullets - The Magnificent.mp3",
+      "title": "Bullets",
+      "artist": "The Magnificent",
+      "album": "",
+      "cover": "assets/covers/crab-t1p0ilkb.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ta88tyv",
+      "file": "Canadian Steele - Stallion.mp3",
+      "title": "Canadian Steele",
+      "artist": "Stallion",
+      "album": "",
+      "cover": "assets/covers/crab-ta88tyv.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1drhde0",
+      "file": "Child Of The Damned - Warlord.mp3",
+      "title": "Child Of The Damned",
+      "artist": "Warlord",
+      "album": "",
+      "cover": "assets/covers/crab-t1drhde0.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tqi4e28",
+      "file": "Days of High Adventure - Doomsword.mp3",
+      "title": "Days of High Adventure",
+      "artist": "Doomsword",
+      "album": "",
+      "cover": "assets/covers/crab-tqi4e28.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t5bkou4",
+      "file": "Defenders of the Crown - Human Fortress.mp3",
+      "title": "Defenders of the Crown",
+      "artist": "Human Fortress",
+      "album": "",
+      "cover": "assets/covers/crab-t5bkou4.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1trkr4d",
+      "file": "Eridan Falls - Drakkar.mp3",
+      "title": "Eridan Falls",
+      "artist": "Drakkar",
+      "album": "",
+      "cover": "assets/covers/crab-t1trkr4d.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t12skptb",
+      "file": "Fly Away - Eden's Curse.mp3",
+      "title": "Fly Away",
+      "artist": "Eden's Curse",
+      "album": "",
+      "cover": "assets/covers/crab-t12skptb.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tlsnp0b",
+      "file": "For the King - Bloodbound.mp3",
+      "title": "For the King",
+      "artist": "Bloodbound",
+      "album": "",
+      "cover": "assets/covers/crab-tlsnp0b.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tbujjpy",
+      "file": "Ghost Division - Sabaton.mp3",
+      "title": "Ghost Division",
+      "artist": "Sabaton",
+      "album": "",
+      "cover": "assets/covers/crab-tbujjpy.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ttqsh2b",
+      "file": "Hail to the King - Avenged Sevenfold.mp3",
+      "title": "Hail to the King",
+      "artist": "Avenged Sevenfold",
+      "album": "",
+      "cover": "assets/covers/crab-ttqsh2b.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "trnj94w",
+      "file": "Hallowed Be Thy Name - cover version - Iced Earth.mp3",
+      "title": "Hallowed Be Thy Name - cover version",
+      "artist": "Iced Earth",
+      "album": "",
+      "cover": "assets/covers/crab-trnj94w.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1cepe4o",
+      "file": "High and Low - Serious Black.mp3",
+      "title": "High and Low",
+      "artist": "Serious Black",
+      "album": "",
+      "cover": "assets/covers/crab-t1cepe4o.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ta4vhkr",
+      "file": "I Can't Wait Anymore - Saxon.mp3",
+      "title": "I Can't Wait Anymore",
+      "artist": "Saxon",
+      "album": "",
+      "cover": "assets/covers/crab-ta4vhkr.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1rxzxjw",
+      "file": "I Don't Believe In Love - Remastered 2003 - Queensrÿche.mp3",
+      "title": "I Don't Believe In Love - Remastered 2003",
+      "artist": "Queensrÿche",
+      "album": "",
+      "cover": "assets/covers/crab-t1rxzxjw.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t11iqbhb",
+      "file": "I Surrender - Rainbow.mp3",
+      "title": "I Surrender",
+      "artist": "Rainbow",
+      "album": "",
+      "cover": "assets/covers/crab-t11iqbhb.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1q6vd2a",
+      "file": "In the Shadows - Burning Point.mp3",
+      "title": "In the Shadows",
+      "artist": "Burning Point",
+      "album": "",
+      "cover": "assets/covers/crab-t1q6vd2a.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1x1m9fg",
+      "file": "Journey Through the Dark - Remastered 2007 - Blind Guardian.mp3",
+      "title": "Journey Through the Dark - Remastered 2007",
+      "artist": "Blind Guardian",
+      "album": "",
+      "cover": "assets/covers/crab-t1x1m9fg.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tvw4rec",
+      "file": "Judas Be My Guide - 2015 Remaster - Iron Maiden.mp3",
+      "title": "Judas Be My Guide - 2015 Remaster",
+      "artist": "Iron Maiden",
+      "album": "",
+      "cover": "assets/covers/crab-tvw4rec.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1n2oz37",
+      "file": "King of the Kill - 2013 Version - Annihilator.mp3",
+      "title": "King of the Kill - 2013 Version",
+      "artist": "Annihilator",
+      "album": "",
+      "cover": "assets/covers/crab-t1n2oz37.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1kh5rk2",
+      "file": "Lay It on the Line - Triumph.mp3",
+      "title": "Lay It on the Line",
+      "artist": "Triumph",
+      "album": "",
+      "cover": "assets/covers/crab-t1kh5rk2.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tlvsz2i",
+      "file": "Lead Us to War - Sinergy.mp3",
+      "title": "Lead Us to War",
+      "artist": "Sinergy",
+      "album": "",
+      "cover": "assets/covers/crab-tlvsz2i.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t8os7po",
+      "file": "Living Out Of Touch - Kingdom Come.mp3",
+      "title": "Living Out Of Touch",
+      "artist": "Kingdom Come",
+      "album": "",
+      "cover": "assets/covers/crab-t8os7po.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t37ovy6",
+      "file": "Lost in Space - Avantasia, Amanda Somerville, Michael Rodernberg.mp3",
+      "title": "Lost in Space",
+      "artist": "Avantasia, Amanda Somerville, Michael Rodernberg",
+      "album": "",
+      "cover": "assets/covers/crab-t37ovy6.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tec4vgz",
+      "file": "Metal Monster - Bloodbound.mp3",
+      "title": "Metal Monster",
+      "artist": "Bloodbound",
+      "album": "",
+      "cover": "assets/covers/crab-tec4vgz.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tcyrs4j",
+      "file": "Monday Morning Apocalypse - Remastered - Evergrey.mp3",
+      "title": "Monday Morning Apocalypse - Remastered",
+      "artist": "Evergrey",
+      "album": "",
+      "cover": "assets/covers/crab-tcyrs4j.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "toheiiq",
+      "file": "Move On! (The Woman Will Always Leave The Man) - Woods Of Ypres.mp3",
+      "title": "Move On! (The Woman Will Always Leave The Man)",
+      "artist": "Woods Of Ypres",
+      "album": "",
+      "cover": "assets/covers/crab-toheiiq.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tg7q5sd",
+      "file": "Neverland - Avantasia.mp3",
+      "title": "Neverland",
+      "artist": "Avantasia",
+      "album": "",
+      "cover": "assets/covers/crab-tg7q5sd.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ttv6rsf",
+      "file": "No Surrender - Judas Priest.mp3",
+      "title": "No Surrender",
+      "artist": "Judas Priest",
+      "album": "",
+      "cover": "assets/covers/crab-ttv6rsf.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "teinldf",
+      "file": "Only for the Weak - In Flames.mp3",
+      "title": "Only for the Weak",
+      "artist": "In Flames",
+      "album": "",
+      "cover": "assets/covers/crab-teinldf.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tgm6zbt",
+      "file": "Over the Top - Battle Beast.mp3",
+      "title": "Over the Top",
+      "artist": "Battle Beast",
+      "album": "",
+      "cover": "assets/covers/crab-tgm6zbt.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1wd45u0",
+      "file": "Pull the Trigger - Q5.mp3",
+      "title": "Pull the Trigger",
+      "artist": "Q5",
+      "album": "",
+      "cover": "assets/covers/crab-t1wd45u0.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1f67ydj",
+      "file": "Raven - Battle Beast.mp3",
+      "title": "Raven",
+      "artist": "Battle Beast",
+      "album": "",
+      "cover": "assets/covers/crab-t1f67ydj.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tv2m8lp",
+      "file": "Riding High - Bullet.mp3",
+      "title": "Riding High",
+      "artist": "Bullet",
+      "album": "",
+      "cover": "assets/covers/crab-tv2m8lp.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1e6xucd",
+      "file": "Riding with the Angels - Samson.mp3",
+      "title": "Riding with the Angels",
+      "artist": "Samson",
+      "album": "",
+      "cover": "assets/covers/crab-t1e6xucd.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1bh4omk",
+      "file": "Rockin' in the Free World - Krokus.mp3",
+      "title": "Rockin' in the Free World",
+      "artist": "Krokus",
+      "album": "",
+      "cover": "assets/covers/crab-t1bh4omk.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1thsu0f",
+      "file": "Rodeo - Pretty Maids.mp3",
+      "title": "Rodeo",
+      "artist": "Pretty Maids",
+      "album": "",
+      "cover": "assets/covers/crab-t1thsu0f.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ti90d5a",
+      "file": "Round and Round - Ratt.mp3",
+      "title": "Round and Round",
+      "artist": "Ratt",
+      "album": "",
+      "cover": "assets/covers/crab-ti90d5a.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1b3d7d6",
+      "file": "Runaway - Sword.mp3",
+      "title": "Runaway",
+      "artist": "Sword",
+      "album": "",
+      "cover": "assets/covers/crab-t1b3d7d6.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1d2ybqf",
+      "file": "Running in Menace - Enforcer.mp3",
+      "title": "Running in Menace",
+      "artist": "Enforcer",
+      "album": "",
+      "cover": "assets/covers/crab-t1d2ybqf.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tcm3ua9",
+      "file": "Secrets Of The American Gods - Single Edit - Blind Guardian.mp3",
+      "title": "Secrets Of The American Gods - Single Edit",
+      "artist": "Blind Guardian",
+      "album": "",
+      "cover": "assets/covers/crab-tcm3ua9.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tr316lc",
+      "file": "Seek and Destroy - Primal Fear.mp3",
+      "title": "Seek and Destroy",
+      "artist": "Primal Fear",
+      "album": "",
+      "cover": "assets/covers/crab-tr316lc.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tfqp0j5",
+      "file": "Shape Your Reality - NorthTale.mp3",
+      "title": "Shape Your Reality",
+      "artist": "NorthTale",
+      "album": "",
+      "cover": "assets/covers/crab-tfqp0j5.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t12bmv0e",
+      "file": "Since You Been Gone - Rainbow.mp3",
+      "title": "Since You Been Gone",
+      "artist": "Rainbow",
+      "album": "",
+      "cover": "assets/covers/crab-t12bmv0e.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tg58ipv",
+      "file": "Stand Up and Fight - Turisas.mp3",
+      "title": "Stand Up and Fight",
+      "artist": "Turisas",
+      "album": "",
+      "cover": "assets/covers/crab-tg58ipv.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t11twnzr",
+      "file": "Steel Avenger - Metalium.mp3",
+      "title": "Steel Avenger",
+      "artist": "Metalium",
+      "album": "",
+      "cover": "assets/covers/crab-t11twnzr.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "ttry7do",
+      "file": "Tears in the Rain - Triumph.mp3",
+      "title": "Tears in the Rain",
+      "artist": "Triumph",
+      "album": "",
+      "cover": "assets/covers/crab-ttry7do.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1gmyot4",
+      "file": "The Book of Heavy Metal (March of the Metallians) - Dream Evil.mp3",
+      "title": "The Book of Heavy Metal (March of the Metallians)",
+      "artist": "Dream Evil",
+      "album": "",
+      "cover": "assets/covers/crab-t1gmyot4.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tcuf2y1",
+      "file": "The Last Stand - Sabaton.mp3",
+      "title": "The Last Stand",
+      "artist": "Sabaton",
+      "album": "",
+      "cover": "assets/covers/crab-tcuf2y1.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1922unp",
+      "file": "The Ones We Left Behind - Bloodbound.mp3",
+      "title": "The Ones We Left Behind",
+      "artist": "Bloodbound",
+      "album": "",
+      "cover": "assets/covers/crab-t1922unp.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tfr4dfm",
+      "file": "The Sunk'n Norwegian - Alestorm.mp3",
+      "title": "The Sunk'n Norwegian",
+      "artist": "Alestorm",
+      "album": "",
+      "cover": "assets/covers/crab-tfr4dfm.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "thui7i0",
+      "file": "There's Something In Roswell - Saxon.mp3",
+      "title": "There's Something In Roswell",
+      "artist": "Saxon",
+      "album": "",
+      "cover": "assets/covers/crab-thui7i0.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1qi9v0r",
+      "file": "Through The Fire And Flames - DragonForce.mp3",
+      "title": "Through The Fire And Flames",
+      "artist": "DragonForce",
+      "album": "",
+      "cover": "assets/covers/crab-t1qi9v0r.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1j2xusw",
+      "file": "To Hell and Back - Sabaton.mp3",
+      "title": "To Hell and Back",
+      "artist": "Sabaton",
+      "album": "",
+      "cover": "assets/covers/crab-t1j2xusw.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "tnk5w64",
+      "file": "Twilight Force - Twilight Force.mp3",
+      "title": "Twilight Force",
+      "artist": "Twilight Force",
+      "album": "",
+      "cover": "assets/covers/crab-tnk5w64.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1ja44s9",
+      "file": "Universe On Fire - Gloryhammer.mp3",
+      "title": "Universe On Fire",
+      "artist": "Gloryhammer",
+      "album": "",
+      "cover": "assets/covers/crab-t1ja44s9.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t14e0oq2",
+      "file": "Until We Touch the Burning Sun - Thunderstone.mp3",
+      "title": "Until We Touch the Burning Sun",
+      "artist": "Thunderstone",
+      "album": "",
+      "cover": "assets/covers/crab-t14e0oq2.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t7cskrx",
+      "file": "Valhalla - Crimson Glory.mp3",
+      "title": "Valhalla",
+      "artist": "Crimson Glory",
+      "album": "",
+      "cover": "assets/covers/crab-t7cskrx.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1r8vxw9",
+      "file": "Wasted Years - Pink Cream 69.mp3",
+      "title": "Wasted Years",
+      "artist": "Pink Cream 69",
+      "album": "",
+      "cover": "assets/covers/crab-t1r8vxw9.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1xc8wfp",
+      "file": "Wild Child - W.A.S.P.mp3",
+      "title": "Wild Child",
+      "artist": "W.A.S.P.",
+      "album": "",
+      "cover": "assets/covers/crab-t1xc8wfp.svg",
+      "metadataReady": true
+    },
+    {
+      "id": "t1vanpvb",
+      "file": "You've Got Another Thing Comin' - Judas Priest.mp3",
+      "title": "You've Got Another Thing Comin'",
+      "artist": "Judas Priest",
+      "album": "",
+      "cover": "assets/covers/crab-t1vanpvb.svg",
+      "metadataReady": true
+    }
+  ]
+}
