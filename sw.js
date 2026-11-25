@@ -1,4 +1,4 @@
-const CACHE='rock-radio-v2-20261125-5';
+const CACHE='rock-radio-v2-20261125-6';
 const SHELL=['./','index.html','styles.css','app.js','core.js','media.js','catalogos/catalogs.js','vendor/jsmediatags.min.js','assets/manrope.ttf','assets/icon.svg','assets/icon-192.png','assets/icon-512.png','manifest.webmanifest','organizar.html','organizar.js'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('rock-radio')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));});
