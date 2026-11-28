@@ -17,10 +17,17 @@ class Element extends EventTarget {
   click(){this.dispatchEvent(new Event('click'));}
 }
 class Audio extends Element {
-  constructor(){super();this.currentTime=0;this.duration=NaN;this.readyState=0;this.paused=true;this.ended=false;this.playbackRate=1;}
-  load(){this.currentTime=0;this.duration=NaN;this.readyState=0;this.ended=false;}
-  pause(){if(!this.paused){this.paused=true;queueMicrotask(()=>this.dispatchEvent(new Event('pause')));}}
-  play(){this.paused=false;queueMicrotask(()=>this.dispatchEvent(new Event('playing')));return Promise.resolve();}
+  constructor(){super();this.currentTime=0;this.duration=NaN;this.readyState=0;this.paused=true;this.ended=false;this.playbackRate=1;this.pauseCalls=0;this.loadCalls=0;}
+  get src(){return this.source;}
+  set src(value){this.source=value;this.reset();}
+  reset(){this.currentTime=0;this.duration=NaN;this.readyState=0;this.ended=false;this.error=null;this.paused=true;}
+  load(){this.loadCalls++;this.reset();}
+  pause(){this.pauseCalls++;if(!this.paused){this.paused=true;queueMicrotask(()=>this.dispatchEvent(new Event('pause')));}}
+  play(){
+    if(this.rejectPlay){this.rejectPlay=false;return Promise.reject(new DOMException('Blocked','NotAllowedError'));}
+    this.paused=false;queueMicrotask(()=>this.dispatchEvent(new Event('playing')));return Promise.resolve();}
+  end(){this.currentTime=this.duration;this.paused=true;this.ended=true;this.dispatchEvent(new Event('pause'));this.dispatchEvent(new Event('ended'));}
+  fail(code){this.error={code};this.paused=true;this.dispatchEvent(new Event('error'));}
   metadata(duration=300){this.duration=duration;this.readyState=1;this.dispatchEvent(new Event('loadedmetadata'));}
   position(seconds){this.currentTime=seconds;this.dispatchEvent(new Event('timeupdate'));}
 }
@@ -28,13 +35,15 @@ async function boot(saved=new Map(),options={}){
   const elements=new Map(),audio=new Audio();elements.set('audio',audio);
   const get=id=>{if(!elements.has(id))elements.set(id,new Element());return elements.get(id);};
   const buttons=['verbus','crab'].map(station=>Object.assign(new Element(),{dataset:{selectStation:station}}));
-  const document=Object.assign(new EventTarget(),{body:new Element(),visibilityState:'visible',getElementById:get,querySelectorAll:selector=>selector==='[data-select-station]'?buttons:[],createElement:()=>new Element(),createElementNS:()=>new Element(),createTextNode:text=>({textContent:text})});
+  const timerButton=Object.assign(new Element(),{dataset:{minutes:'1'}});
+  get('sleepDialog').close=()=>{};
+  const document=Object.assign(new EventTarget(),{body:new Element(),visibilityState:'visible',getElementById:get,querySelectorAll:selector=>selector==='[data-select-station]'?buttons:selector==='[data-minutes]'?[timerButton]:[],createElement:()=>new Element(),createElementNS:()=>new Element(),createTextNode:text=>({textContent:text})});
   const window=Object.assign(new EventTarget(),{ROCK_PREVIEW:true,RadioCore:core,RadioMedia:{metadata:async()=>({})},ROCK_CONFIG:{storageBaseUrl:'https://music.example.test',remoteCatalogs:false},ROCK_CATALOGS:{verbus:Array.from({length:12},(_,i)=>({id:'v'+i,file:'Verbus '+i+'.mp3',title:'Verbus '+i,artist:'Artist'})),crab:Array.from({length:12},(_,i)=>({id:'c'+i,file:'Crab '+i+'.mp3',title:'Crab '+i,artist:'Artist'}))}});
   let now=10000,writes=0;
   const context={window,document,navigator:{},location:{protocol:'https:',href:'https://radio.example.test/'},localStorage:{getItem:key=>{if(options.blockedStorage)throw Error('denied');return saved.get(key)??null;},setItem:(key,value)=>{if(options.blockedStorage)throw Error('denied');saved.set(key,value);writes++;}},URL:class extends URL{static createObjectURL(){return 'blob:local';}static revokeObjectURL(){}},setTimeout:()=>0,clearTimeout(){},setInterval(){},Date:class extends Date{static now(){return now;}}};
   vm.runInNewContext(app,context,{filename:'app.js'});
   await Promise.resolve();await Promise.resolve();
-  return {get,audio,window,document,saved,buttons,bookmark:station=>JSON.parse(saved.get('rock-v2-playback-'+station)||'null'),advance:ms=>{now+=ms;},writes:()=>writes,select:index=>get('trackList').children[index].children[1].click(),switch:station=>buttons.find(b=>b.dataset.selectStation===station).click()};
+  return {get,audio,window,document,saved,buttons,timerButton,bookmark:station=>JSON.parse(saved.get('rock-v2-playback-'+station)||'null'),advance:ms=>{now+=ms;},writes:()=>writes,select:index=>get('trackList').children[index].children[1].click(),switch:station=>buttons.find(b=>b.dataset.selectStation===station).click()};
 }
 
 test('song 10 and its precise position survive leaving and reloading, without autoplay',async()=>{
@@ -87,4 +96,70 @@ test('temporary local MP3 files do not overwrite the saved published collection'
 });
 test('denied browser storage does not prevent playback',async()=>{
   const radio=await boot(new Map(),{blockedStorage:true});radio.audio.metadata();radio.get('play').click();await Promise.resolve();assert.equal(radio.audio.paused,false);
+});
+
+test('both stations advance past five tracks while hidden without explicitly pausing or reloading audio',async()=>{
+  for(const [station,prefix] of [['verbus','v'],['crab','c']]){
+    const radio=await boot();
+    radio.switch(station);
+    radio.get('play').click();
+    radio.document.visibilityState='hidden';
+    const {pauseCalls,loadCalls}=radio.audio;
+    for(let i=1;i<=7;i++){
+      await Promise.resolve();
+      radio.audio.metadata();
+      radio.audio.end();
+      assert.equal(radio.bookmark(station).trackId,prefix+i);
+      assert.equal(radio.audio.paused,false);
+    }
+    assert.equal(radio.audio.pauseCalls,pauseCalls);
+    assert.equal(radio.audio.loadCalls,loadCalls);
+  }
+});
+
+test('auto-advance retries one network error and skips an unreadable track',async()=>{
+  const radio=await boot();
+  radio.get('play').click();
+  await Promise.resolve();
+  radio.audio.metadata();
+  radio.audio.end();
+  assert.equal(radio.bookmark('verbus').trackId,'v1');
+  radio.audio.fail(2);
+  assert.equal(radio.bookmark('verbus').trackId,'v1');
+  radio.audio.fail(4);
+  assert.equal(radio.bookmark('verbus').trackId,'v2');
+  assert.equal(radio.audio.paused,false);
+});
+
+test('a hidden autoplay rejection gets one retry when the page becomes visible',async()=>{
+  const radio=await boot();
+  radio.get('play').click();
+  await Promise.resolve();
+  radio.audio.metadata();
+  radio.document.visibilityState='hidden';
+  radio.audio.rejectPlay=true;
+  radio.audio.end();
+  await Promise.resolve();
+  assert.equal(radio.audio.paused,true);
+  radio.document.visibilityState='visible';
+  radio.document.dispatchEvent(new Event('visibilitychange'));
+  assert.equal(radio.audio.paused,false);
+  assert.equal(radio.bookmark('verbus').trackId,'v1');
+});
+
+test('repeat uses native looping and an expired sleep timer prevents advance',async()=>{
+  const radio=await boot();
+  radio.get('repeat').click();
+  assert.equal(radio.audio.loop,true);
+  radio.get('repeat').click();
+  assert.equal(radio.audio.loop,false);
+  radio.get('play').click();
+  await Promise.resolve();
+  radio.audio.metadata();
+  radio.timerButton.click();
+  radio.advance(60001);
+  radio.audio.position(300);
+  radio.audio.end();
+  assert.equal(radio.audio.paused,true);
+  assert.equal(radio.bookmark('verbus').trackId,'v0');
 });
